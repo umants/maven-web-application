@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mavenwebbpod
+  labels:
+    app: mavenwebbapp
+  namespace: test-ns
+spec:
+  containers:
+  - name: mavenwebbapp
+    image: stsdev77/maven-web-application:BUILD_NUMBER
+    ports:
+      - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mavensvc
+  namespace: test-ns
+spec:
+  type: Nodeport
+  selector:
+    app: mavenwebbapp
+  ports:
+  - port: 80
+    targetPort: 8080
